@@ -3,560 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pizzeria RP - Gestion V1</title>
-  <style>
-    :root {
-      --bg: #111827;
-      --card: #1f2937;
-      --card2: #243244;
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --accent: #f97316;
-      --accent2: #fb923c;
-      --green: #22c55e;
-      --red: #ef4444;
-      --yellow: #eab308;
-      --border: #374151;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #0f172a;
-      border-bottom: 1px solid var(--border);
-      padding: 14px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 20px;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    nav {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 10px;
-      background: #111827;
-      position: sticky;
-      top: 73px;
-      z-index: 10;
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav button,
-    .btn {
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 8px;
-      font-weight: bold;
-      background: var(--card);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    nav button.active,
-    .btn.primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .container {
-      padding: 14px;
-      max-width: 980px;
-      margin: auto;
-    }
-
-    .section { display: none; }
-    .section.active { display: block; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-
-    .product-card {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .product-title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .price {
-      color: var(--accent2);
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .muted { color: var(--muted); }
-
-    input, select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px;
-      background: #111827;
-      color: var(--text);
-      margin: 6px 0 10px;
-    }
-
-    label {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 12px;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-    }
-
-    th { color: var(--muted); font-size: 12px; }
-
-    .table-wrap {
-      overflow-x: auto;
-      background: var(--card);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .kpi {
-      font-size: 26px;
-      font-weight: bold;
-      margin-top: 6px;
-    }
-
-    .green { color: var(--green); }
-    .red { color: var(--red); }
-    .yellow { color: var(--yellow); }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .danger { background: var(--red); color: white; }
-    .success { background: var(--green); color: white; }
-    .secondary { background: var(--card2); }
-
-    .cart-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--card2);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    @media (max-width: 650px) {
-      nav { grid-template-columns: repeat(2, 1fr); top: 78px; }
-      .row { grid-template-columns: 1fr; }
-      h1 { font-size: 18px; }
-    }
-  </style>
+  <title>Pizzeria RP - Gestion V1.2</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>🍕 Pizzeria RP - Gestion V1</h1>
-    <div class="subtitle">Caisse mobile, stock automatique, TVA 30%, comptabilité simple</div>
-  </header>
+<header class="topbar">
+  <div><h1>🍕 Pizzeria RP</h1><p>Caisse, stock, livraisons, salaires et impôts</p></div>
+  <span class="badge">V1.2</span>
+</header>
 
-  <nav>
-    <button class="tab active" data-tab="caisse">Caisse</button>
-    <button class="tab" data-tab="compta">Compta</button>
-    <button class="tab" data-tab="stock">Stock</button>
-    <button class="tab" data-tab="admin">Admin</button>
-  </nav>
+<nav class="tabs">
+  <button class="tab active" data-tab="caisse">Caisse</button>
+  <button class="tab" data-tab="compta">Compta</button>
+  <button class="tab" data-tab="stock">Stock</button>
+  <button class="tab" data-tab="impots">Impôts</button>
+  <button class="tab" data-tab="admin">Admin</button>
+</nav>
 
-  <main class="container">
-    <section id="caisse" class="section active">
-      <div class="card">
-        <label>Employé en caisse</label>
-        <input id="cashierName" placeholder="Ex: Sarah" />
-      </div>
+<main class="container">
+<section id="caisse" class="section active">
+  <div class="panel"><label>Employé en caisse</label><input id="cashierName" placeholder="Ex: Sarah" /></div>
+  <h2>Caisse</h2><div id="productsGrid" class="cards"></div>
+  <h2>Commande</h2>
+  <div class="panel">
+    <div id="cartBox"></div>
+    <div class="actions"><button class="btn danger" onclick="clearCart()">Vider</button><button class="btn primary" onclick="checkout()">Encaisser</button></div>
+    <div class="totals">
+      <div>Total TTC : <strong id="cartTotal">0$</strong></div>
+      <div>TVA incluse 30% : <strong id="cartTax">0$</strong></div>
+      <div>Total HT : <strong id="cartHT">0$</strong></div>
+    </div>
+  </div>
+</section>
 
-      <h2>Caisse</h2>
-      <div id="productsGrid" class="grid"></div>
+<section id="compta" class="section">
+  <h2>Tableau de bord</h2>
+  <div class="cards">
+    <div class="panel kpi"><span>CA TTC</span><strong id="kpiTTC">0$</strong></div>
+    <div class="panel kpi"><span>TVA 30%</span><strong id="kpiTVA" class="yellow">0$</strong></div>
+    <div class="panel kpi"><span>CA HT</span><strong id="kpiHT">0$</strong></div>
+    <div class="panel kpi"><span>Bénéfice estimé</span><strong id="kpiProfit" class="green">0$</strong></div>
+  </div>
+  <h2>Dépenses</h2>
+  <div class="panel">
+    <div class="form-grid"><div><label>Nom dépense</label><input id="expenseName" placeholder="Ex: Achat farine" /></div><div><label>Montant</label><input id="expenseAmount" type="number" placeholder="Ex: 500" /></div></div>
+    <button class="btn primary" onclick="addExpense()">Ajouter dépense</button>
+  </div>
+  <h2>Ventes pizzeria</h2>
+  <div class="table-wrap"><table><thead><tr><th>Date</th><th>Employé</th><th>Produits</th><th>TTC</th><th>TVA</th><th>HT</th></tr></thead><tbody id="salesTable"></tbody></table></div>
+  <h2>Liste dépenses</h2>
+  <div class="table-wrap"><table><thead><tr><th>Date</th><th>Dépense</th><th>Montant</th></tr></thead><tbody id="expensesTable"></tbody></table></div>
+</section>
 
-      <h2>Commande</h2>
-      <div class="card">
-        <div id="cart"></div>
-        <div class="actions">
-          <button class="btn danger" onclick="clearCart()">Vider</button>
-          <button class="btn primary" onclick="checkout()">Encaisser</button>
-        </div>
-        <div style="margin-top:12px">
-          <div>Total TTC : <strong id="cartTotal">0$</strong></div>
-          <div>TVA incluse 30% : <strong id="cartTax">0$</strong></div>
-          <div>Total HT : <strong id="cartHT">0$</strong></div>
-        </div>
-      </div>
-    </section>
+<section id="stock" class="section">
+  <h2>Stock ingrédients</h2>
+  <div class="table-wrap"><table><thead><tr><th>Ingrédient</th><th>Stock</th><th>Minimum</th><th>Statut</th></tr></thead><tbody id="stockTable"></tbody></table></div>
+  <h2>Ajouter / retirer du stock</h2>
+  <div class="panel">
+    <div class="form-grid"><div><label>Ingrédient</label><select id="stockIngredient"></select></div><div><label>Quantité</label><input id="stockQty" type="number" placeholder="Ex: 10 ou -5" /></div></div>
+    <button class="btn primary" onclick="adjustStock()">Modifier stock</button>
+  </div>
+</section>
 
-    <section id="compta" class="section">
-      <h2>Tableau de bord</h2>
-      <div class="grid">
-        <div class="card"><div class="muted">CA TTC</div><div id="kpiTTC" class="kpi">0$</div></div>
-        <div class="card"><div class="muted">TVA 30%</div><div id="kpiTVA" class="kpi yellow">0$</div></div>
-        <div class="card"><div class="muted">CA HT</div><div id="kpiHT" class="kpi">0$</div></div>
-        <div class="card"><div class="muted">Bénéfice estimé</div><div id="kpiProfit" class="kpi green">0$</div></div>
-      </div>
+<section id="impots" class="section">
+  <h2>Feuille d'imposition hebdomadaire</h2>
+  <div class="cards">
+    <div class="panel"><label>Choisir une semaine</label><input type="date" id="taxDate" /><button class="btn primary" onclick="previewTaxWeek()">Voir la semaine</button></div>
+    <div class="panel kpi"><span>Semaine sélectionnée</span><strong id="selectedWeekLabel" class="blue">-</strong><small id="selectedWeekRange">Choisis une date</small></div>
+  </div>
+  <h2>Livraisons</h2>
+  <div class="panel">
+    <p class="muted">Les livraisons sont séparées des ventes pizzeria.</p>
+    <div class="form-grid"><div><label>Livreur</label><input id="deliveryDriver" placeholder="Ex: Marco" /></div><div><label>Nombre</label><input id="deliveryCount" type="number" /></div><div><label>Solde livraison</label><input id="deliveryAmount" type="number" /></div><div><label>Date</label><input id="deliveryDate" type="date" /></div></div>
+    <button class="btn primary" onclick="addDelivery()">Ajouter livraison</button>
+  </div>
+  <h2>Salaires employés</h2>
+  <div class="panel">
+    <div class="form-grid"><div><label>Employé</label><input id="salaryEmployee" /></div><div><label>Salaire versé</label><input id="salaryAmount" type="number" /></div><div><label>Note</label><input id="salaryNote" /></div><div><label>Date</label><input id="salaryDate" type="date" /></div></div>
+    <button class="btn primary" onclick="addSalary()">Ajouter salaire</button>
+  </div>
+  <h2>Résumé semaine</h2><div id="taxPreview" class="tax-sheet"></div>
+  <div class="actions"><button class="btn success" onclick="saveTaxSheet()">Enregistrer feuille impôts</button><button class="btn bluebtn" onclick="copyTaxSheet()">Copier déclaration</button></div>
+  <h2>Historique feuilles impôts</h2><div id="taxSheetsList"></div>
+</section>
 
-      <h2>Dépenses</h2>
-      <div class="card">
-        <div class="row">
-          <div><label>Nom dépense</label><input id="expenseName" placeholder="Ex: Achat farine" /></div>
-          <div><label>Montant</label><input id="expenseAmount" type="number" placeholder="Ex: 500" /></div>
-        </div>
-        <button class="btn primary" onclick="addExpense()">Ajouter dépense</button>
-      </div>
+<section id="admin" class="section">
+  <h2>Produits & recettes</h2><div id="recipesList" class="cards"></div>
+  <h2>Créer une pizza</h2>
+  <div class="panel">
+    <div class="form-grid"><div><label>Nom pizza</label><input id="newPizzaName" placeholder="Ex: 4 Fromages" /></div><div><label>Prix TTC</label><input id="newPizzaPrice" type="number" /></div></div>
+    <label>Recette : ingrédient:quantité, séparés par des virgules</label><input id="newPizzaRecipe" placeholder="farine:1,eau:1,sel:1,fromage:4" />
+    <button class="btn primary" onclick="addPizza()">Ajouter pizza</button>
+  </div>
+  <h2>Sauvegarde / Logs</h2>
+  <div class="panel">
+    <p class="muted">GitHub Pages ne peut pas écrire directement dans logs.json. Télécharge les logs avec le bouton ci-dessous.</p>
+    <div class="actions"><button class="btn secondary" onclick="exportData()">Afficher JSON</button><button class="btn success" onclick="downloadLogs()">Télécharger logs.json</button><button class="btn danger" onclick="resetData()">Réinitialiser</button></div>
+    <textarea id="exportBox" placeholder="Export ici"></textarea>
+  </div>
+</section>
+</main>
 
-      <h2>Ventes</h2>
-      <div class="table-wrap"><table><thead><tr><th>Date</th><th>Employé</th><th>Produits</th><th>TTC</th><th>TVA</th><th>HT</th></tr></thead><tbody id="salesTable"></tbody></table></div>
-
-      <h2>Liste dépenses</h2>
-      <div class="table-wrap"><table><thead><tr><th>Date</th><th>Dépense</th><th>Montant</th></tr></thead><tbody id="expensesTable"></tbody></table></div>
-    </section>
-
-    <section id="stock" class="section">
-      <h2>Stock ingrédients</h2>
-      <div class="table-wrap"><table><thead><tr><th>Ingrédient</th><th>Stock</th><th>Minimum</th><th>Statut</th></tr></thead><tbody id="stockTable"></tbody></table></div>
-
-      <h2>Ajouter / retirer du stock</h2>
-      <div class="card">
-        <div class="row">
-          <div><label>Ingrédient</label><select id="stockIngredient"></select></div>
-          <div><label>Quantité</label><input id="stockQty" type="number" placeholder="Ex: 10 ou -5" /></div>
-        </div>
-        <button class="btn primary" onclick="adjustStock()">Modifier stock</button>
-      </div>
-    </section>
-
-    <section id="admin" class="section">
-      <h2>Produits & recettes</h2>
-      <div id="recipesList" class="grid"></div>
-
-      <h2>Créer une pizza</h2>
-      <div class="card">
-        <div class="row">
-          <div><label>Nom pizza</label><input id="newPizzaName" placeholder="Ex: 4 Fromages" /></div>
-          <div><label>Prix TTC</label><input id="newPizzaPrice" type="number" placeholder="Ex: 150" /></div>
-        </div>
-        <p class="muted">Recette simple : écris ingrédient:quantité, séparés par des virgules.</p>
-        <input id="newPizzaRecipe" placeholder="Ex: farine:1,eau:1,sel:1,fromage:4" />
-        <button class="btn primary" onclick="addPizza()">Ajouter pizza</button>
-      </div>
-
-      <h2>Sauvegarde</h2>
-      <div class="card">
-        <p class="muted">Les données sont sauvegardées dans ce téléphone/navigateur avec localStorage.</p>
-        <div class="actions">
-          <button class="btn secondary" onclick="exportData()">Exporter JSON</button>
-          <button class="btn danger" onclick="resetData()">Réinitialiser</button>
-        </div>
-        <textarea id="exportBox" style="width:100%;height:120px;margin-top:10px;background:#111827;color:white;border:1px solid var(--border);border-radius:10px;padding:10px" placeholder="Export ici"></textarea>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const TVA_RATE = 0.30;
-    const fmt = n => `${Number(n || 0).toFixed(2)}$`;
-
-    const defaultData = {
-      ingredients: {
-        farine: { stock: 100, min: 20 },
-        eau: { stock: 100, min: 20 },
-        sel: { stock: 60, min: 10 },
-        tomate: { stock: 80, min: 15 },
-        fromage: { stock: 80, min: 15 },
-        jambon: { stock: 40, min: 10 },
-        champignon: { stock: 40, min: 10 },
-        oeuf: { stock: 30, min: 8 }
-      },
-      products: [
-        { id: crypto.randomUUID(), name: "Margarita", price: 100, recipe: { farine: 1, eau: 1, sel: 1, tomate: 1, fromage: 1 } },
-        { id: crypto.randomUUID(), name: "Calzone", price: 130, recipe: { farine: 1, eau: 1, sel: 1, tomate: 1, fromage: 2, jambon: 1 } },
-        { id: crypto.randomUUID(), name: "Regina", price: 120, recipe: { farine: 1, eau: 1, sel: 1, tomate: 1, fromage: 1, jambon: 1, champignon: 1 } },
-        { id: crypto.randomUUID(), name: "Paysanne", price: 140, recipe: { farine: 1, eau: 1, sel: 1, tomate: 1, fromage: 1, jambon: 1, oeuf: 1 } }
-      ],
-      sales: [],
-      expenses: []
-    };
-
-    let data = loadData();
-    let cart = [];
-
-    function loadData() {
-      const saved = localStorage.getItem("pizzeria_rp_v1");
-      return saved ? JSON.parse(saved) : structuredClone(defaultData);
-    }
-
-    function saveData() {
-      localStorage.setItem("pizzeria_rp_v1", JSON.stringify(data));
-    }
-
-    function taxFromTTC(ttc) {
-      const ht = ttc / (1 + TVA_RATE);
-      return { ht, tax: ttc - ht };
-    }
-
-    function switchTab(tab) {
-      document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
-      document.querySelectorAll(".section").forEach(s => s.classList.toggle("active", s.id === tab));
-      renderAll();
-    }
-
-    document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.tab)));
-
-    function renderProducts() {
-      const grid = document.getElementById("productsGrid");
-      grid.innerHTML = data.products.map(p => `
-        <div class="card product-card">
-          <div class="product-title">${p.name}</div>
-          <div class="price">${fmt(p.price)}</div>
-          <div class="muted">TVA incluse 30%</div>
-          <button class="btn primary" onclick="addToCart('${p.id}')">Ajouter</button>
-        </div>
-      `).join("");
-    }
-
-    function addToCart(id) {
-      const product = data.products.find(p => p.id === id);
-      const existing = cart.find(i => i.id === id);
-      if (existing) existing.qty += 1;
-      else cart.push({ id, qty: 1, name: product.name, price: product.price });
-      renderCart();
-    }
-
-    function renderCart() {
-      const box = document.getElementById("cart");
-      if (!cart.length) box.innerHTML = '<p class="muted">Aucune pizza dans la commande.</p>';
-      else box.innerHTML = cart.map(item => `
-        <div class="cart-line">
-          <div>${item.qty} × ${item.name}</div>
-          <div><strong>${fmt(item.qty * item.price)}</strong></div>
-        </div>
-      `).join("");
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const { ht, tax } = taxFromTTC(total);
-      document.getElementById("cartTotal").textContent = fmt(total);
-      document.getElementById("cartTax").textContent = fmt(tax);
-      document.getElementById("cartHT").textContent = fmt(ht);
-    }
-
-    function clearCart() {
-      cart = [];
-      renderCart();
-    }
-
-    function hasEnoughStock() {
-      const needed = {};
-      for (const item of cart) {
-        const p = data.products.find(x => x.id === item.id);
-        for (const [ing, qty] of Object.entries(p.recipe)) {
-          needed[ing] = (needed[ing] || 0) + qty * item.qty;
-        }
-      }
-      for (const [ing, qty] of Object.entries(needed)) {
-        if (!data.ingredients[ing]) data.ingredients[ing] = { stock: 0, min: 0 };
-        if (data.ingredients[ing].stock < qty) return { ok: false, ing, qty, stock: data.ingredients[ing].stock };
-      }
-      return { ok: true, needed };
-    }
-
-    function checkout() {
-      if (!cart.length) return alert("Commande vide.");
-      const cashier = document.getElementById("cashierName").value.trim() || "Employé inconnu";
-      const check = hasEnoughStock();
-      if (!check.ok) return alert(`Stock insuffisant : ${check.ing} (${check.stock}/${check.qty})`);
-
-      for (const [ing, qty] of Object.entries(check.needed)) data.ingredients[ing].stock -= qty;
-
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const { ht, tax } = taxFromTTC(total);
-      data.sales.unshift({
-        date: new Date().toLocaleString("fr-FR"),
-        cashier,
-        items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
-        total,
-        ht,
-        tax
-      });
-      saveData();
-      clearCart();
-      renderAll();
-      alert("Vente encaissée et stock décompté.");
-    }
-
-    function renderStock() {
-      const tbody = document.getElementById("stockTable");
-      tbody.innerHTML = Object.entries(data.ingredients).map(([name, info]) => {
-        const status = info.stock <= info.min ? '<span class="red">À racheter</span>' : '<span class="green">OK</span>';
-        return `<tr><td>${name}</td><td>${info.stock}</td><td>${info.min}</td><td>${status}</td></tr>`;
-      }).join("");
-
-      const sel = document.getElementById("stockIngredient");
-      sel.innerHTML = Object.keys(data.ingredients).map(i => `<option value="${i}">${i}</option>`).join("");
-    }
-
-    function adjustStock() {
-      const ing = document.getElementById("stockIngredient").value;
-      const qty = Number(document.getElementById("stockQty").value || 0);
-      if (!ing || !qty) return alert("Choisis un ingrédient et une quantité.");
-      data.ingredients[ing].stock += qty;
-      document.getElementById("stockQty").value = "";
-      saveData();
-      renderStock();
-    }
-
-    function renderCompta() {
-      const salesTotal = data.sales.reduce((s, v) => s + v.total, 0);
-      const taxTotal = data.sales.reduce((s, v) => s + v.tax, 0);
-      const htTotal = data.sales.reduce((s, v) => s + v.ht, 0);
-      const expensesTotal = data.expenses.reduce((s, e) => s + e.amount, 0);
-      const profit = htTotal - expensesTotal;
-
-      document.getElementById("kpiTTC").textContent = fmt(salesTotal);
-      document.getElementById("kpiTVA").textContent = fmt(taxTotal);
-      document.getElementById("kpiHT").textContent = fmt(htTotal);
-      document.getElementById("kpiProfit").textContent = fmt(profit);
-      document.getElementById("kpiProfit").className = `kpi ${profit >= 0 ? 'green' : 'red'}`;
-
-      document.getElementById("salesTable").innerHTML = data.sales.map(s => `
-        <tr>
-          <td>${s.date}</td>
-          <td>${s.cashier}</td>
-          <td>${s.items.map(i => `${i.qty}x ${i.name}`).join(", ")}</td>
-          <td>${fmt(s.total)}</td>
-          <td>${fmt(s.tax)}</td>
-          <td>${fmt(s.ht)}</td>
-        </tr>
-      `).join("");
-
-      document.getElementById("expensesTable").innerHTML = data.expenses.map(e => `
-        <tr><td>${e.date}</td><td>${e.name}</td><td>${fmt(e.amount)}</td></tr>
-      `).join("");
-    }
-
-    function addExpense() {
-      const name = document.getElementById("expenseName").value.trim();
-      const amount = Number(document.getElementById("expenseAmount").value || 0);
-      if (!name || !amount) return alert("Ajoute un nom et un montant.");
-      data.expenses.unshift({ date: new Date().toLocaleString("fr-FR"), name, amount });
-      document.getElementById("expenseName").value = "";
-      document.getElementById("expenseAmount").value = "";
-      saveData();
-      renderCompta();
-    }
-
-    function renderRecipes() {
-      document.getElementById("recipesList").innerHTML = data.products.map(p => `
-        <div class="card">
-          <div class="product-title">${p.name}</div>
-          <div class="price">${fmt(p.price)}</div>
-          <p>${Object.entries(p.recipe).map(([i,q]) => `<span class="pill">${i}: ${q}</span>`).join(" ")}</p>
-        </div>
-      `).join("");
-    }
-
-    function addPizza() {
-      const name = document.getElementById("newPizzaName").value.trim();
-      const price = Number(document.getElementById("newPizzaPrice").value || 0);
-      const recipeRaw = document.getElementById("newPizzaRecipe").value.trim();
-      if (!name || !price || !recipeRaw) return alert("Nom, prix et recette obligatoires.");
-      const recipe = {};
-      recipeRaw.split(",").forEach(part => {
-        const [ingRaw, qtyRaw] = part.split(":");
-        const ing = ingRaw.trim().toLowerCase();
-        const qty = Number(qtyRaw || 0);
-        if (ing && qty) {
-          recipe[ing] = qty;
-          if (!data.ingredients[ing]) data.ingredients[ing] = { stock: 0, min: 10 };
-        }
-      });
-      data.products.push({ id: crypto.randomUUID(), name, price, recipe });
-      document.getElementById("newPizzaName").value = "";
-      document.getElementById("newPizzaPrice").value = "";
-      document.getElementById("newPizzaRecipe").value = "";
-      saveData();
-      renderAll();
-    }
-
-    function exportData() {
-      document.getElementById("exportBox").value = JSON.stringify(data, null, 2);
-    }
-
-    function resetData() {
-      if (!confirm("Réinitialiser toutes les données ?")) return;
-      data = structuredClone(defaultData);
-      cart = [];
-      saveData();
-      renderAll();
-    }
-
-    function renderAll() {
-      renderProducts();
-      renderCart();
-      renderStock();
-      renderCompta();
-      renderRecipes();
-    }
-
-    renderAll();
-  </script>
+<script>
+const TVA_RATE=0.30, fmt=n=>`${Number(n||0).toFixed(2)}$`;
+const defaultData={ingredients:{farine:{stock:100,min:20},eau:{stock:100,min:20},sel:{stock:60,min:10},tomate:{stock:80,min:15},fromage:{stock:80,min:15},jambon:{stock:40,min:10},champignon:{stock:40,min:10},oeuf:{stock:30,min:8}},products:[{id:"pizza-margarita",name:"Margarita",price:100,recipe:{farine:1,eau:1,sel:1,tomate:1,fromage:1}},{id:"pizza-calzone",name:"Calzone",price:130,recipe:{farine:1,eau:1,sel:1,tomate:1,fromage:2,jambon:1}},{id:"pizza-regina",name:"Regina",price:120,recipe:{farine:1,eau:1,sel:1,tomate:1,fromage:1,jambon:1,champignon:1}},{id:"pizza-paysanne",name:"Paysanne",price:140,recipe:{farine:1,eau:1,sel:1,tomate:1,fromage:1,jambon:1,oeuf:1}}],sales:[],expenses:[],deliveries:[],salaries:[],taxSheets:[],logs:[]};
+let data=loadData(), cart=[];
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function migrateData(d){d.deliveries||=[];d.salaries||=[];d.taxSheets||=[];d.expenses||=[];d.sales||=[];d.logs||=[];return d}
+function loadData(){const s=localStorage.getItem("pizzeria_rp_v1");return s?migrateData(JSON.parse(s)):structuredClone(defaultData)}
+function saveData(){localStorage.setItem("pizzeria_rp_v1",JSON.stringify(data))}
+function addLog(type,detail){data.logs.unshift({id:uid(),type,detail,date:new Date().toLocaleString("fr-FR"),isoDate:new Date().toISOString()});saveData()}
+function taxFromTTC(ttc){const ht=ttc/(1+TVA_RATE);return{ht,tax:ttc-ht}}
+function dateValueToLocal(v){if(!v)return new Date();const [y,m,d]=v.split("-").map(Number);return new Date(y,m-1,d)}
+function dateOnlyFromString(v){if(!v)return null;if(/^\d{4}-\d{2}-\d{2}$/.test(v))return dateValueToLocal(v);const p=new Date(v);return isNaN(p)?null:p}
+function toDateInputValue(date){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`}
+function formatDateFR(d){return d.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"})}
+function getWeekInfo(date){const selected=new Date(date.getFullYear(),date.getMonth(),date.getDate()),day=selected.getDay()||7,monday=new Date(selected);monday.setDate(selected.getDate()-day+1);const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);const jan1=new Date(selected.getFullYear(),0,1),days=Math.floor((selected-jan1)/86400000),weekNumber=Math.ceil((days+jan1.getDay()+1)/7);return{weekNumber,start:monday,end:sunday,key:`${selected.getFullYear()}-S${String(weekNumber).padStart(2,"0")}`,label:`Semaine ${weekNumber}`,range:`du ${formatDateFR(monday)} au ${formatDateFR(sunday)}`}}
+function isDateInRange(v,start,end){const d=dateOnlyFromString(v);if(!d)return false;const c=new Date(d.getFullYear(),d.getMonth(),d.getDate());return c>=start&&c<=end}
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===btn.dataset.tab));document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id===btn.dataset.tab));renderAll()}));
+function renderProducts(){productsGrid.innerHTML=data.products.map(p=>`<div class="panel product-card"><div class="product-title">${p.name}</div><div class="price">${fmt(p.price)}</div><div class="muted">TVA incluse 30%</div><button class="btn primary" onclick="addToCart('${p.id}')">Ajouter</button></div>`).join("")}
+function addToCart(id){const product=data.products.find(p=>p.id===id),existing=cart.find(i=>i.id===id);existing?existing.qty+=1:cart.push({id,qty:1,name:product.name,price:product.price});renderCart()}
+function renderCart(){cartBox.innerHTML=!cart.length?'<p class="muted">Aucune pizza dans la commande.</p>':cart.map(i=>`<div class="cart-line"><div>${i.qty} × ${i.name}</div><strong>${fmt(i.qty*i.price)}</strong></div>`).join("");const total=cart.reduce((s,i)=>s+i.price*i.qty,0),{ht,tax}=taxFromTTC(total);cartTotal.textContent=fmt(total);cartTax.textContent=fmt(tax);cartHT.textContent=fmt(ht)}
+function clearCart(){cart=[];renderCart()}
+function hasEnoughStock(){const needed={};for(const item of cart){const p=data.products.find(x=>x.id===item.id);for(const [ing,qty] of Object.entries(p.recipe))needed[ing]=(needed[ing]||0)+qty*item.qty}for(const [ing,qty] of Object.entries(needed)){if(!data.ingredients[ing])data.ingredients[ing]={stock:0,min:0};if(data.ingredients[ing].stock<qty)return{ok:false,ing,qty,stock:data.ingredients[ing].stock}}return{ok:true,needed}}
+function checkout(){if(!cart.length)return alert("Commande vide.");const cashier=cashierName.value.trim()||"Employé inconnu",check=hasEnoughStock();if(!check.ok)return alert(`Stock insuffisant : ${check.ing} (${check.stock}/${check.qty})`);for(const [ing,qty] of Object.entries(check.needed))data.ingredients[ing].stock-=qty;const total=cart.reduce((s,i)=>s+i.price*i.qty,0),{ht,tax}=taxFromTTC(total),sale={id:uid(),date:new Date().toLocaleString("fr-FR"),isoDate:new Date().toISOString(),cashier,items:cart.map(i=>({name:i.name,qty:i.qty,price:i.price})),total,ht,tax};data.sales.unshift(sale);addLog("vente",sale);clearCart();renderAll();alert("Vente encaissée et stock décompté.")}
+function renderStock(){stockTable.innerHTML=Object.entries(data.ingredients).map(([n,info])=>`<tr><td>${n}</td><td>${info.stock}</td><td>${info.min}</td><td>${info.stock<=info.min?'<span class="red">À racheter</span>':'<span class="green">OK</span>'}</td></tr>`).join("");stockIngredient.innerHTML=Object.keys(data.ingredients).map(i=>`<option value="${i}">${i}</option>`).join("")}
+function adjustStock(){const ing=stockIngredient.value,qty=Number(stockQty.value||0);if(!ing||!qty)return alert("Choisis un ingrédient et une quantité.");data.ingredients[ing].stock+=qty;addLog("stock",{ingredient:ing,quantite:qty,nouveauStock:data.ingredients[ing].stock});stockQty.value="";renderAll()}
+function renderCompta(){const salesTotal=data.sales.reduce((s,v)=>s+v.total,0),taxTotal=data.sales.reduce((s,v)=>s+v.tax,0),htTotal=data.sales.reduce((s,v)=>s+v.ht,0),expensesTotal=data.expenses.reduce((s,e)=>s+e.amount,0),profit=htTotal-expensesTotal;kpiTTC.textContent=fmt(salesTotal);kpiTVA.textContent=fmt(taxTotal);kpiHT.textContent=fmt(htTotal);kpiProfit.textContent=fmt(profit);kpiProfit.className=profit>=0?"green":"red";salesTable.innerHTML=data.sales.map(s=>`<tr><td>${s.date}</td><td>${s.cashier}</td><td>${s.items.map(i=>`${i.qty}x ${i.name}`).join(", ")}</td><td>${fmt(s.total)}</td><td>${fmt(s.tax)}</td><td>${fmt(s.ht)}</td></tr>`).join("");expensesTable.innerHTML=data.expenses.map(e=>`<tr><td>${e.date}</td><td>${e.name}</td><td>${fmt(e.amount)}</td></tr>`).join("")}
+function addExpense(){const name=expenseName.value.trim(),amount=Number(expenseAmount.value||0);if(!name||!amount)return alert("Ajoute un nom et un montant.");const expense={id:uid(),date:new Date().toLocaleString("fr-FR"),isoDate:new Date().toISOString(),name,amount};data.expenses.unshift(expense);addLog("depense",expense);expenseName.value="";expenseAmount.value="";renderAll()}
+function addDelivery(){const driver=deliveryDriver.value.trim(),count=Number(deliveryCount.value||0),amount=Number(deliveryAmount.value||0),date=deliveryDate.value||toDateInputValue(new Date());if(!driver||!count||!amount)return alert("Livreur, nombre de livraisons et solde obligatoires.");const delivery={id:uid(),date,driver,count,amount};data.deliveries.unshift(delivery);addLog("livraison",delivery);deliveryDriver.value="";deliveryCount.value="";deliveryAmount.value="";renderAll()}
+function addSalary(){const employee=salaryEmployee.value.trim(),amount=Number(salaryAmount.value||0),note=salaryNote.value.trim(),date=salaryDate.value||toDateInputValue(new Date());if(!employee||!amount)return alert("Employé et salaire obligatoires.");const salary={id:uid(),date,employee,amount,note};data.salaries.unshift(salary);addLog("salaire",salary);salaryEmployee.value="";salaryAmount.value="";salaryNote.value="";renderAll()}
+function buildTaxPreview(){const info=getWeekInfo(dateValueToLocal(taxDate.value||toDateInputValue(new Date()))),sales=data.sales.filter(s=>isDateInRange(s.isoDate||s.date,info.start,info.end)),deliveries=data.deliveries.filter(d=>isDateInRange(d.date,info.start,info.end)),salaries=data.salaries.filter(s=>isDateInRange(s.date,info.start,info.end)),expenses=data.expenses.filter(e=>isDateInRange(e.isoDate||e.date,info.start,info.end)),pizzeriaTTC=sales.reduce((a,s)=>a+s.total,0),pizzeriaTVA=sales.reduce((a,s)=>a+s.tax,0),pizzeriaHT=sales.reduce((a,s)=>a+s.ht,0),deliveryTotal=deliveries.reduce((a,d)=>a+d.amount,0),deliveryCount=deliveries.reduce((a,d)=>a+d.count,0),salaryTotal=salaries.reduce((a,s)=>a+s.amount,0),expenseTotal=expenses.reduce((a,e)=>a+e.amount,0),totalToDeclare=pizzeriaTTC+deliveryTotal,estimatedNet=pizzeriaHT+deliveryTotal-salaryTotal-expenseTotal;return{info,pizzeriaTTC,pizzeriaTVA,pizzeriaHT,deliveryTotal,deliveryCount,salaryTotal,expenseTotal,totalToDeclare,estimatedNet}}
+function previewTaxWeek(){const p=buildTaxPreview();selectedWeekLabel.textContent=p.info.label;selectedWeekRange.textContent=p.info.range;taxPreview.innerHTML=`<div class="tax-header"><div><h3>📄 Feuille impôts - ${p.info.label}</h3><p class="muted">${p.info.range}</p></div><span class="pill">${p.info.key}</span></div><div class="cards"><div class="panel kpi"><span>Ventes TTC</span><strong>${fmt(p.pizzeriaTTC)}</strong></div><div class="panel kpi"><span>TVA</span><strong class="yellow">${fmt(p.pizzeriaTVA)}</strong></div><div class="panel kpi"><span>Livraisons</span><strong class="blue">${fmt(p.deliveryTotal)}</strong></div><div class="panel kpi"><span>Salaires</span><strong class="red">${fmt(p.salaryTotal)}</strong></div></div><div class="table-wrap"><table><tbody><tr><td>CA pizzeria TTC</td><td>${fmt(p.pizzeriaTTC)}</td></tr><tr><td>CA pizzeria HT</td><td>${fmt(p.pizzeriaHT)}</td></tr><tr><td>TVA incluse 30%</td><td>${fmt(p.pizzeriaTVA)}</td></tr><tr><td>Nombre livraisons</td><td>${p.deliveryCount}</td></tr><tr><td>Solde livraisons</td><td>${fmt(p.deliveryTotal)}</td></tr><tr><td>Total à déclarer</td><td><strong>${fmt(p.totalToDeclare)}</strong></td></tr><tr><td>Salaires employés</td><td>${fmt(p.salaryTotal)}</td></tr><tr><td>Dépenses</td><td>${fmt(p.expenseTotal)}</td></tr><tr><td>Résultat estimé</td><td><strong>${fmt(p.estimatedNet)}</strong></td></tr></tbody></table></div>`}
+function taxText(p){return`📄 FEUILLE IMPÔTS - ${p.info.label}\n${p.info.range}\nRéférence : ${p.info.key}\n\nCA pizzeria TTC : ${fmt(p.pizzeriaTTC)}\nTVA incluse 30% : ${fmt(p.pizzeriaTVA)}\nCA pizzeria HT : ${fmt(p.pizzeriaHT)}\n\nLivraisons : ${p.deliveryCount}\nSolde livraisons : ${fmt(p.deliveryTotal)}\n\nTotal à déclarer : ${fmt(p.totalToDeclare)}\nSalaires employés : ${fmt(p.salaryTotal)}\nDépenses : ${fmt(p.expenseTotal)}\nRésultat estimé : ${fmt(p.estimatedNet)}`}
+function saveTaxSheet(){const p=buildTaxPreview(),sheet={id:uid(),key:p.info.key,label:p.info.label,range:p.info.range,savedAt:new Date().toLocaleString("fr-FR"),...p,text:taxText(p)};delete sheet.info;const i=data.taxSheets.findIndex(s=>s.key===sheet.key);i>=0?data.taxSheets[i]=sheet:data.taxSheets.unshift(sheet);addLog("feuille_impots",sheet);renderAll();alert("Feuille d'impôts enregistrée.")}
+async function copyTaxSheet(){const text=taxText(buildTaxPreview());try{await navigator.clipboard.writeText(text);alert("Déclaration copiée.")}catch{alert(text)}}
+function renderTaxSheets(){taxSheetsList.innerHTML=!data.taxSheets.length?`<div class="panel muted">Aucune feuille enregistrée.</div>`:data.taxSheets.map(s=>`<div class="panel history-card"><div class="tax-header"><div><strong>${s.label}</strong><p class="muted">${s.range}</p></div><span class="pill">Enregistrée : ${s.savedAt}</span></div><textarea readonly>${s.text}</textarea></div>`).join("")}
+function renderRecipes(){recipesList.innerHTML=data.products.map(p=>`<div class="panel"><div class="product-title">${p.name}</div><div class="price">${fmt(p.price)}</div><p>${Object.entries(p.recipe).map(([i,q])=>`<span class="pill">${i}: ${q}</span>`).join(" ")}</p></div>`).join("")}
+function addPizza(){const name=newPizzaName.value.trim(),price=Number(newPizzaPrice.value||0),raw=newPizzaRecipe.value.trim();if(!name||!price||!raw)return alert("Nom, prix et recette obligatoires.");const recipe={};raw.split(",").forEach(part=>{const [ingRaw,qtyRaw]=part.split(":"),ing=ingRaw.trim().toLowerCase(),qty=Number(qtyRaw||0);if(ing&&qty){recipe[ing]=qty;if(!data.ingredients[ing])data.ingredients[ing]={stock:0,min:10}}});const pizza={id:uid(),name,price,recipe};data.products.push(pizza);addLog("ajout_pizza",pizza);newPizzaName.value="";newPizzaPrice.value="";newPizzaRecipe.value="";renderAll()}
+function exportData(){exportBox.value=JSON.stringify(data,null,2)}
+function downloadLogs(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="logs.json";a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(!confirm("Réinitialiser toutes les données ?"))return;data=structuredClone(defaultData);cart=[];saveData();renderAll()}
+function initDates(){const t=toDateInputValue(new Date());taxDate.value=t;deliveryDate.value=t;salaryDate.value=t}
+function renderAll(){saveData();renderProducts();renderCart();renderStock();renderCompta();renderRecipes();previewTaxWeek();renderTaxSheets()}
+initDates();renderAll();
+</script>
 </body>
 </html>
